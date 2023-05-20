@@ -1,4 +1,3 @@
-import produce from "immer";
 
 const initialState = [
     {id: 1, fullName: 'Mohamed Ait Hani', tel: "0623514524", email: "mohamed@gmail.com"},
@@ -16,16 +15,26 @@ const TodoReducer=(state=initialState, action)=>{
         case 'REMOVE_TODO':
             const filteredTodos = state.filter((todo)=>todo.id!==action.payload);
             return filteredTodos;
+            // case "EDIT_EMPLOYEE":
+            //     return produce(state,draft=>{
+            //         draft.map((contact)=>{
+            //             if(contact.id===action.payload.id){
+            //                 contact.fullName=action.payload.fullName;
+            //                 contact.tel=action.payload.tel;
+            //                 contact.email=action.payload.email;
+            //             }
+            //         })
+            //     })
             case "EDIT_EMPLOYEE":
-                return produce(state,draft=>{
-                    draft.map((contact)=>{
-                        if(contact.id===action.payload.id){
-                            contact.fullName=action.payload.fullName;
-                            contact.tel=action.payload.tel;
-                            contact.email=action.payload.email;
-                        }
-                    })
+                return state.map((contact)=>{
+                    if(contact.id===action.payload.id){
+                        contact.fullName=action.payload.fullName;
+                        contact.tel=action.payload.tel;
+                        contact.email=action.payload.email;
+                    }
+                    return contact;
                 })
+            
         
         default: return state;
     }
